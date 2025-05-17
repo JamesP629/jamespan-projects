@@ -1,0 +1,178 @@
+---
+title: "Diabetes Analysis"
+author: "Jacob Beels, Justine Chen, James Pan, Adria Navarro, Jack Man"
+date: "2024-11-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+Diabetes impacts millions of Americans each year, and there are strategies that can help mitigate the harms of the disease in meany patients. Diagnosing diabetes early can give patients the chance to get ahead of the disease and make lifestyle changes that may help reduce the impact of this disease on their life. 
+
+The dataset we have chosen to analyze is a collection of survey results that contain possible diabetes indicators and if the respondent actually has diabetes. Through our analysis, our goal is to create a model that can predict if a person has diabetes based on their response to these indicators. 
+
+Kaggle Dataset: https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset
+
+## Data Preperation
+### Libraries
+```{r, results = 'hide'}
+library(caret)
+library(ggplot2)
+library(dplyr)
+library(class)
+library(janitor)
+library(C50)
+```
+
+## Stacked Model
+
+### Input Data
+
+These CSV files were generated using the attached RMD files. Basic information for each prediction is provided below:
+
+#### Log Predict: 
+The model used for the predictions used in this project is listed below
+```{r}
+# GiantModel <- lm(Diabetes_binary ~ .+.*. + I(Fruits^2) + I(Veggies^2) + I(PhysHlth^2) + Fruits + PhysHlth + Veggies, data = data_train)
+```
+
+#### KNN Predict:
+We found that 3 clusters had the best fit for our data.
+
+#### ANN Predict:
+We used 3x2 layers for our ANN model
+
+#### SVM Predict:
+We used the vanilla kernel 
+
+#### Decision Tree and Random Forest Predict:
+No unique modifications were made to these models. 
+
+
+#### Read in the data
+```{r, results = 'hide'}
+log_pred = read.csv("predGM.csv")
+knn_pred = read.csv("knn_pred.csv")
+ann_pred = read.csv("ann_pred_raw.csv")
+#svm_pred = read.csv("svm_pred_raw.csv")
+tree_pred = read.csv("DecisionTree.csv")
+forest_pred = read.csv("randomForestFIXED.csv")
+```
+Note: Unfortunately, after testing with multiple kernels, we were unable to get SVM to work with our data. We ran each kernel for many hours with no results, so we decided our 5 working models should be sufficient for our final stacked model. 
+
+### Importing data for test comparison
+This is how the test and train data was split for the above models. 
+```{r, results = 'hide'}
+inputData = read.csv("diabetes_binary_health_indicators_BRFSS2015.csv")
+splitSize <- 0.8 * nrow(inputData)
+set.seed(12345)
+splitRow <- sample(1:nrow(inputData), splitSize)
+splitTrain <- inputData[splitRow, ]
+splitTest <- inputData[-splitRow, ]
+```
+
+
+
+### Combine the data
+```{r}
+combined_df = data.frame(log = log_pred$x, 
+                         knn = knn_pred$x, 
+                         ann = ann_pred$V1, 
+                         tree = tree_pred$x,
+                         forest = forest_pred$x,
+                         binary = splitTest$Diabetes_binary)
+```
+
+And then split the data, 70% train and 30% test
+```{r}
+set.seed(12345)
+test_rows_combined <- sample(1:nrow(combined_df), nrow(combined_df)*0.3)
+test_combined <- combined_df[test_rows_combined, ]
+train_combined <- combined_df[-test_rows_combined, ]
+```
+
+Checking the structure of the combined data
+```{r}
+str(combined_df)
+```
+
+### Decision tree for combined data
+
+We will be using our own cost matrix for this decision tree
+```{r}
+cost_matrix_combined <- matrix(c(0, 5,   # Cost of predicting "No" when the true class is "Yes"
+                        1, 0),  # Cost of predicting "Yes" when the true class is "No"
+                      nrow = 2, 
+                      byrow = TRUE)
+
+rownames(cost_matrix_combined) <- colnames(cost_matrix_combined) <- c("0", "1")
+
+# Build the decision tree model with the cost matrix
+combined_model <- C5.0(as.factor(binary) ~ ., data = train_combined, costs = cost_matrix_combined)
+combined_prediction <- predict(combined_model, newdata = test_combined)
+```
+
+We decided to go with the above cost matrix because sensitivity is very important for our predictions. When predicting if someone has diabetes, it is far more costly for someone to be told they don't have diabetes when they actually do, rather than the inverse. The cost of a false positive is simply incentivising the person to live a healthier lifestyle. The cost of a false negative would allow a person who is on track to develop diabetes to continue their habits that are hurting them, while they think they are safe. 
+
+
+Overall, our Kappa of 0.3195 isn't amazing, but when predicting if a user has diabetes, sensitivity is key as mentioned above. This model will not perfectly predict if a user has diabetes, but it will be decently close. In this situation, even a false positive will positively impact the user by incentivising them to live a healthier lifestyle. 
+
+
+
+Below is a plot of the decision tree
+```{r}
+plot(combined_model)
+```
+
+### Combined Decision Tree
+```{r}
+confusionMatrix(as.factor(combined_prediction), as.factor(test_combined$binary), positive = "1")
+```
+
+## Supporting Models Confusion Matrices
+
+### Log
+```{r}
+log_pred_bin = ifelse(log_pred$x > 0.5, 1, 0)
+confusionMatrix(as.factor(log_pred_bin), as.factor(splitTest$Diabetes_binary), positive = "1")
+```
+
+### KNN
+```{r}
+confusionMatrix(as.factor(knn_pred$x), as.factor(splitTest$Diabetes_binary), positive = "1")
+```
+
+### ANN
+```{r}
+ann_pred_bin = ifelse(ann_pred$V1 > 0.5, 1, 0)
+confusionMatrix(as.factor(ann_pred_bin), as.factor(splitTest$Diabetes_binary), positive = "1")
+```
+
+### Decision Tree
+```{r}
+confusionMatrix(as.factor(tree_pred$x), as.factor(splitTest$Diabetes_binary), positive = "1")
+```
+
+### Random Forest
+```{r}
+confusionMatrix(as.factor(forest_pred$x), as.factor(splitTest$Diabetes_binary), positive = "1")
+```
+
+
+##Tableau Exploration
+```{r}
+write.csv(combined_df, "diabetes_model_predictionsFINAL.csv", row.names = FALSE)
+model_metrics <- data.frame(
+  Model = c("Logistic", "KNN", "ANN", "Decision Tree", "Random Forest", "Combined Model"),
+  Accuracy = c(0.8662, 0.845, 0.8666, 0.7715, 0.8652, 0.7401),
+  Sensitivity = c(0.1264, 0.2023, 0.1560, 0.6723, 0.1376, 0.7707),
+  Specificity = c(0.9869, 0.9499, 0.9825, 0.7877, 0.9838, 0.7352),
+  Kappa = c(0.1696, 0.1914, 0.2003, 0.3268, 0.1785, 0.3159)
+)
+
+write.csv(model_metrics, "model_metrics_summary.csv", row.names = FALSE)
+```
+
