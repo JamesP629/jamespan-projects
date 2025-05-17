@@ -18,4 +18,5 @@ Utilized KenPomRatings and Excel Models as well as @Risk from Palisade to simula
 
 ## Contact
 **Email** *panjames@umich.edu*
+
 **Linkedin**[https://www.linkedin.com/in/james-pan-b1a109197/]
