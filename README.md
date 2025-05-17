@@ -9,4 +9,5 @@ Welcome to my Github Portfolio! I'm currently a business student at the Universi
 - Tools: Rstudio, Tableau, Excel, Risk@Palisade
 
 ## Projects
-(./Amazon_Workbook_Final.xlsx)
+
+### [Amazon Workbook Analysis](./Amazon_Workbook_Final.xlsx)
