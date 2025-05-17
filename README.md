@@ -11,3 +11,7 @@ Welcome to my Github Portfolio! I'm currently a business student at the Universi
 ## Projects
 
 ### [Amazon Workbook Analysis](./Amazon_Workbook_Final.xlsx)
+Analyzed Amazon data using Excel and @Risk from Palisade to get insights about their supply chain.
+
+### [March Madness 2025 Simulation]
+Utilized KenPomRatings and Excel Models as well as @Risk from Palisade to simulate the 2025 March Madness Tournam
