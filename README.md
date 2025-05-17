@@ -17,6 +17,6 @@ Analyzed Amazon data using Excel and @Risk from Palisade to get insights about t
 Utilized KenPomRatings and Excel Models as well as @Risk from Palisade to simulate the 2025 March Madness Tournament
 
 ## Contact
-**Email** *panjames@umich.edu*
+**Email**: *panjames@umich.edu*
 
 **Linkedin**[https://www.linkedin.com/in/james-pan-b1a109197/]
