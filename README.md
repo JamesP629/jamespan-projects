@@ -16,7 +16,7 @@ Analyzed Amazon data using Excel and @Risk from Palisade to get insights about t
 ### [March Madness 2025 Simulation](./March%20Madness%202025.xlsx)
 Utilized KenPomRatings and Excel Models as well as @Risk from Palisade to simulate the 2025 March Madness Tournament
 
-### [Diabetes Prediction Model](./diabetes_prediction_r/)
+### [Diabetes Prediction Model](DiabetesAnalysis.Rmd)
 
 ## Contact
 **Email:** *panjames@umich.edu*
