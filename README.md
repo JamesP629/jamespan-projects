@@ -1,6 +1,6 @@
 # jamespan-projects
 
-#Hi, I'm James Pan
+Hi, I'm James Pan
 
 Welcome to my Github Portfolio! I'm currently a business student at the University of Michigan with a focus on Supply Chain and Operations.
 
