@@ -10,7 +10,7 @@ Welcome to my Github Portfolio! I'm currently a business student at the Universi
 
 ## Projects
 
-### [Amazon Workbook Analysis](./Amazon_Workbook_Final.xlsx)
+### [Amazon Workbook Analysis](.amazon_distribution_analysis/Amazon_Workbook_Final.xlsx)
 Analyzed Amazon data using Excel and @Risk from Palisade to get insights about their supply chain.
 
 ### [March Madness 2025 Simulation](./March%20Madness%202025.xlsx)
