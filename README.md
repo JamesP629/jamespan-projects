@@ -16,7 +16,7 @@ march_madness_2025/March Madness 2025.xlsx
 ### [March Madness 2025 Simulation](march_madness_2025/March%20Madness%202025.xlsx)
 Utilized KenPomRatings and Excel Models as well as @Risk from Palisade to simulate the 2025 March Madness Tournament
 
-### [Diabetes Prediction Model](./DiabetesAnalysis.Rmd)
+### [Diabetes Prediction Model](diabetes_analysis/DiabetesAnalysis.Rmd)
 Developed predictive models (logistic regression, decision tree, KNN, ANN, random forest) using R to classify patients’ diabetes risk based on clinical indicators.	
 Created an interactive Tableau dashboard to visualize key features and model outputs for presentation.	
 ## Contact
