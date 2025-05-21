@@ -17,4 +17,5 @@ library(janitor)
 
 library(C50)
 
-
+###  Model Results:
+|Model Name| Accuracy | Sensitivity | Specificity | Pos Pred Value| Neg Pred Value| Balanced Accuracy| 
