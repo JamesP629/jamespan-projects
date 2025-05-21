@@ -12,7 +12,6 @@ Amazon must decide which warehouse to stock lightweight items for, taking into a
 - Uncertain Customer Demand
 - Tradeoffs between shipping costs, holding costs, and service levels
 
-Simulation Logic
 ###  Key Inputs
 | Input Variable         | Distribution Type             | Description                                |
 |------------------------|-------------------------------|--------------------------------------------|
