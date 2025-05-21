@@ -13,9 +13,24 @@ Amazon must decide which warehouse to stock lightweight items for, taking into a
 - Tradeoffs between shipping costs, holding costs, and service levels
 
 Simulation Logic
-Key Inputs
-- Weekly Demand: Modeled with a normal distribution
-- Lead Time: Uniform Distribution
-- Order Quantity: Fixed at 1000 units
-- Holding Cost Rate:
-- Service Level Target         
+###  Key Inputs
+| Input Variable         | Distribution Type             | Description                                |
+|------------------------|-------------------------------|--------------------------------------------|
+| **Weekly Demand**      | Normal(μ, σ)                  | Varies by region and product               |
+| **Lead Time**          | Varies by region and product  | Assumed as Constant for the Model          |
+| **Order Quantity**     | Varies by region and product  | Inventory replenishment amount             |
+| **Holding Cost Rate**  | Fixed % for region and product| Cost of storing inventory weekly           |
+###
+
+## Output Metrics
+- **Cycle Inventory**
+- **Safety Stock**
+- **Average Inventory**
+
+  These metrics provide insights into operational efficiency and cost-performance tradeoffs across different stocking strategies.
+
+## Applications
+This project showcases:
+- Quantitative modeling for decision-making
+- Inventory Optimization
+- Tradeoff Analysis between warehouses to maximize cost and reduce risk
