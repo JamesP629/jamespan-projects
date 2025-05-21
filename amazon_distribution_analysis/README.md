@@ -1,4 +1,4 @@
-##Amazon Distribution Analysis
+**Amazon Distribution Analysis**
 
 This project simulates and analyzes Amazon's inventory operations using Monte Carlo simulation techniques. The goal of this project is to evaluate inventory metrics, such as cycle inventory, safety stock, average inventory, and service level.
 
