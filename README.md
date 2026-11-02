@@ -2,7 +2,7 @@
 
 Hi, I'm James Pan
 
-Welcome to my Github Portfolio! I'm currently a business student at the University of Michigan with a focus on Supply Chain and Operations.
+Welcome to my Github Portfolio! I graduated from the University of Michigan with a degree in Business Administration, with a focus on Business Analytics
 
 ## Skills
 - Languages: R, SQL
